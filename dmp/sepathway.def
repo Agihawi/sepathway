@@ -1,0 +1,53 @@
+# Singularity definition for interproscan and prokka functional genome annotation 16.04
+
+bootstrap: docker
+from: ubuntu:16.04
+
+# To Build: sudo /opt/ohpc/pub/libs/singularity/3.2.1/bin/singularity build sepathway.sif sepathway.def 
+%help
+    A simple container to run prokka and interproscan
+
+%environment
+    PATH="$PATH:/usr/local/anaconda/bin/"
+    PATH="$PATH:/interproscan/"
+    PATH="$PATH:/interproscan/bin/"
+%post
+    apt-get update
+    apt-get install -y eatmydata wget curl sudo nano perl elfutils
+    apt-get install -y gfortran emboss
+    eatmydata apt-get install -y bzip2
+    apt-get clean
+    #install anaconda
+    bash ./anaconda.sh -b -p /usr/local/anaconda ; rm ./anaconda.sh
+    # set anaconda path
+    export PATH="$PATH:/usr/local/anaconda/bin/"
+    #configure conda
+    conda config --add channels bioconda
+    conda config --add channels r
+    #install dependencies
+    conda install python=3.6
+    conda install pip
+    conda install -c bioconda perl-bioperl
+    conda install -c bioconda snakemake
+    #conda install -c bioconda prokka
+    conda install -c conda-forge openjdk
+    #upgrade permissions to access database
+    sudo chmod -R 777 /usr/local/anaconda/
+    #House Keeping
+    conda clean --tarballs
+
+%files
+    #copy in files - instructions on how to obtain files included
+    #wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.39-77.0/interproscan-5.39-77.0-64-bit.tar.gz
+    #wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.39-77.0/interproscan-5.39-77.0-64-bit.tar.gz.md5
+    #md5sum -c interproscan-5.39-77.0-64-bit.tar.gz.md5
+    # Must return *interproscan-5.39-77.0-64-bit.tar.gz: OK*
+    interproscan-5.39-77.0 /interproscan
+    #
+    #wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ./anaconda.sh && \
+    anaconda.sh ./anaconda.sh
+    # wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.19/blast-2.2.19-ia32-linux.tar.gz
+    # tar -xzvf blast-2.2.19-ia32-linux.tar.gz
+%runscript
+    echo "Interproscan & Prokka Singularity"
+    chmod +x ./sepathway; ./sepathway

@@ -1,0 +1,45 @@
+# Singularity definition for interproscan functional genome annotation 16.04
+
+bootstrap: docker
+from: ubuntu:16.04
+
+# To Build: sudo /opt/ohpc/pub/libs/singularity/3.2.1/bin/singularity build prokka.sif prokka.def 
+%help
+    A simple container to run prokka
+
+%environment
+    PATH="$PATH:/usr/local/anaconda/bin/"
+%post
+    apt-get update
+    apt-get install -y eatmydata wget curl sudo nano perl elfutils build-essential
+    apt-get install -y gfortran emboss
+    eatmydata apt-get install -y bzip2
+    sudo apt-get install -y libdatetime-perl libxml-simple-perl libdigest-md5-perl git default-jre bioperl
+    apt-get clean
+    #install anaconda
+    bash ./anaconda.sh -b -p /usr/local/anaconda ; rm ./anaconda.sh
+    # set anaconda path
+    export PATH="$PATH:/usr/local/anaconda/bin/"
+    #configure conda
+    conda config --add channels bioconda
+    conda config --add channels r
+    #install dependencies
+    conda install python=3.6
+    conda install pip
+    conda install -c bioconda perl-bioperl
+    conda install -c conda-forge openjdk
+    conda install -c bioconda ncbi-genome-download
+    conda install -c conda-forge -c bioconda -c defaults prokka
+    #upgrade permissions to access database
+    sudo chmod -R 777 /usr/local/anaconda/
+    #House Keeping
+    conda clean --tarballs
+
+%files
+    #copy in files - instructions on how to obtain files included
+    #wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ./anaconda.sh && \
+    anaconda.sh ./anaconda.sh
+    # wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.19/blast-2.2.19-ia32-linux.tar.gz
+    # tar -xzvf blast-2.2.19-ia32-linux.tar.gz
+%runscript
+    echo "Prokka Singularity"
