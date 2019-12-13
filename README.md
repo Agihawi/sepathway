@@ -48,5 +48,5 @@ All def files used to create singularity images are in `dmp/`
 Downloading from sylabs (ensure singularity is installed):
 - navigate to bin: `cd bin/`
 - download interproscan singularity: ``
-- download prokka singularity: `singularity pull library://a_gihawi/prokka/prokka.sif:latest`
-- download R singularity: `singularity pull library://a_gihawi/default/tidyverse_environment:latest`
+- download prokka singularity: `singularity pull -UF library://a_gihawi/prokka/prokka.sif:latest`
+- download R singularity: `singularity pull -UF library://a_gihawi/default/tidyverse_environment:latest`
