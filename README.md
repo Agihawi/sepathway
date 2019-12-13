@@ -44,3 +44,9 @@ If something goes wrong and you need to cancel the pipeline. Before re-launching
 
 #### Obtaining singularity image files:
 All def files used to create singularity images are in `dmp/`
+
+downloading from sylabs:
+- navigate to bin: `cd bin/`
+- download interproscan singularity: ``
+- download prokka singularity: `singularity pull library://a_gihawi/prokka/prokka.sif:latest`
+- download R singularity: `singularity pull library://a_gihawi/default/tidyverse_environment:latest`
