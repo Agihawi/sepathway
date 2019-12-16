@@ -47,6 +47,6 @@ All def files used to create singularity images are in `dmp/`
 
 Downloading from sylabs (ensure singularity is installed):
 - navigate to bin: `cd bin/`
-- download interproscan singularity: ``
 - download prokka singularity: `singularity pull -UF library://a_gihawi/prokka/prokka.sif:latest`
 - download R singularity: `singularity pull -UF library://a_gihawi/default/tidyverse_environment:latest`
+- download interproscan singularity: visit [https://ueamobilecho.uea.ac.uk/node_share_links/10?token=1dcb5159-dbe6-4511-bc42-160881caf6b8](https://ueamobilecho.uea.ac.uk/node_share_links/10?token=1dcb5159-dbe6-4511-bc42-160881caf6b8) (link active until 16th Dec 2020)
