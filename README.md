@@ -27,7 +27,7 @@ Example:
 - Launch the singularity 
 `singularity shell bin/prokka.sif`
 - Download the all complete bacterial genomes for the genus Fusobacterium to the genomes/ folder
-`ncbi-genome-download --format fasta --assembly-level complete --genus Fusobacterium -o genomes/
+`ncbi-genome-download --format fasta --assembly-level complete --genus Fusobacterium -o genomes/`
 - Move all genomes to the genomes folder
 `mv genomes/refseq/*/*/*.gz genomes/; rm -rf genomes/refseq/`
 
