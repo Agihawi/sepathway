@@ -9,7 +9,7 @@ from: ubuntu:16.04
 
 %environment
     PATH="$PATH:/usr/local/anaconda/bin/"
-    lC_ALL=C
+    LC_ALL=C
 %post
     apt-get update
     apt-get install -y eatmydata wget curl sudo nano perl elfutils build-essential
