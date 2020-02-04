@@ -9,6 +9,7 @@ from: ubuntu:16.04
 
 %environment
     PATH="$PATH:/usr/local/anaconda/bin/"
+    lC_ALL=C
 %post
     apt-get update
     apt-get install -y eatmydata wget curl sudo nano perl elfutils build-essential
@@ -17,6 +18,7 @@ from: ubuntu:16.04
     sudo apt-get install -y libdatetime-perl libxml-simple-perl libdigest-md5-perl git default-jre bioperl
     apt-get clean
     #install anaconda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ./anaconda.sh && \
     bash ./anaconda.sh -b -p /usr/local/anaconda ; rm ./anaconda.sh
     # set anaconda path
     export PATH="$PATH:/usr/local/anaconda/bin/"
@@ -30,16 +32,13 @@ from: ubuntu:16.04
     conda install -c conda-forge openjdk
     conda install -c bioconda ncbi-genome-download
     conda install -c conda-forge -c bioconda -c defaults prokka
+    #download github latest tbl2asn file - because it expires every 6 months... :(
+    rm -rf /usr/local/anaconda/bin/tbl2asn
+    wget https://github.com/tseemann/prokka/raw/master/binaries/linux/tbl2asn -O /usr/local/anaconda/bin/tbl2asn
     #upgrade permissions to access database
     sudo chmod -R 777 /usr/local/anaconda/
     #House Keeping
     conda clean --tarballs
 
-%files
-    #copy in files - instructions on how to obtain files included
-    #wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ./anaconda.sh && \
-    anaconda.sh ./anaconda.sh
-    # wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.19/blast-2.2.19-ia32-linux.tar.gz
-    # tar -xzvf blast-2.2.19-ia32-linux.tar.gz
 %runscript
     echo "Prokka Singularity"
